@@ -23,19 +23,8 @@ class Screen {
     public:
         Screen();
         bool inputPoll();
-        void showWindow(int windowType);
-        void addButton(int leftEdge, int topEdge, int rightEdge, int bottomEdge);
-        void SetHomeScreen(void);
-
         void buildDialogueBox(String title, String message, screenField position);
 
     private:
-        String PrintOneLine(String message, Colors color, screenField position);
-        
-        void drawHeader();
-        
-        void drawFooter();
-        void drawHomeIcon(int leftEdge, int topEdge, int rightEdge, int bottomEdge);
-        void drawBackIcon(int leftEdge, int topEdge, int rightEdge, int bottomEdge);
-        void drawForwardIcon(int leftEdge, int topEdge, int rightEdge, int bottomEdge);
+
 };
