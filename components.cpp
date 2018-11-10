@@ -1,7 +1,20 @@
 #include "components.h"
+#define SCREEN_WIDTH 240
+#define SCREEN_HEIGHT 320
 
 Touch *touch;
-static int c = 0;
+
+void Components::clearScreen()
+{
+  screenField position;
+  position.leftEdge = 0;
+  position.topEdge = 0;
+  position.rightEdge = SCREEN_WIDTH;
+  position.bottomEdge = SCREEN_HEIGHT;
+  Rectangle r(black, position);
+  r.display();
+}
+
 void Components::window(String title)
 {
   auto frameArea = this->_position;
@@ -31,6 +44,7 @@ void Components::button(int id, String buttonText)
   int height = _position.bottomEdge - _position.topEdge;
   int buttonSize = (width >= height) ? height : width;
   int minimumButtonSizeForCurvedStyle = 80;
+  
   if (buttonSize >= minimumButtonSizeForCurvedStyle) {
     fillSurface(_color, _position);
   } else {
@@ -85,7 +99,7 @@ void Components::fillSurface(Colors color, screenField position)
 {
   const int NUM_GFX_OBJECTS = 9;
   Graphics *frame[NUM_GFX_OBJECTS];
-
+  
   screenField topLeftCornerFrame;
   topLeftCornerFrame.leftEdge = position.leftEdge;
   topLeftCornerFrame.topEdge = position.topEdge;
@@ -148,44 +162,15 @@ void Components::fillSurface(Colors color, screenField position)
   centerFrame.rightEdge = position.rightEdge - 2*EDGE_CURVE;
   centerFrame.bottomEdge = position.bottomEdge - 2*EDGE_CURVE;
   frame[8] = new Rectangle(color, centerFrame);
-
+  
   for (int i = NUM_GFX_OBJECTS - 1; i >= 0; --i) {
     frame[i]->display();
     delete frame[i];
   }
 }
 
-
-bool ok = false;
-bool Button::pollButtons()
+ButtonID Button::pollButtons()
 {
   ButtonID button = Touch::tick();
-  screenField position;
-  position.leftEdge = 0 + c;
-  position.topEdge = 0 + c;
-  position.rightEdge = 50 + c;
-  position.bottomEdge = 50 + c;
-  switch(button) {
-    case 1: {
-      Rectangle r(green, position);
-      r.display();
-      c = c + 10;
-      break;
-    }
-    case 2: {
-      Rectangle r(red, position);
-      r.display();
-      c = c + 10;
-      break;
-      }
-    default: 
-    {
-      
-    }
-      
-  }
-  return false;
+  return button;
 }
-
-
-

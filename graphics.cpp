@@ -2,7 +2,7 @@
 
 Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC);
 
-void Graphics::Init()
+void Graphics::init()
 {
   tft.begin();
   tft.fillRect(0, 0, tft.width(), tft.height(), black);

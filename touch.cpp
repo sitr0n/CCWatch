@@ -41,7 +41,7 @@ Touch::~Touch()
   }
 }
 
-void Touch::Init(Coordinate screenWidth, Coordinate screenHeight)
+void Touch::init(Coordinate screenWidth, Coordinate screenHeight)
 {
   _screenWidth = screenWidth;
   _screenHeight = screenHeight;

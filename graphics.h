@@ -26,7 +26,7 @@ class Graphics {
         Graphics(Colors color, screenField position) : _color(color), _position(position) {};
         virtual ~Graphics() = default;
         
-        static void Init();
+        static void init();
         virtual void display() = 0;
         
         void Print(String text);

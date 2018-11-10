@@ -23,7 +23,7 @@ class Touch {
     public:
         Touch(ButtonID id, screenField position);
         ~Touch();
-        static void Init(Coordinate screenWidth, Coordinate screenHeight);
+        static void init(Coordinate screenWidth, Coordinate screenHeight);
         static ButtonID tick();
         static void clearAllButtons();
         

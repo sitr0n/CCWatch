@@ -10,7 +10,10 @@
 class Components {
     public:
         Components(Colors color, screenField position) : _color(color), _position(position) {};
-        static void Init(int screenWidth, int screenHeight){Graphics::Init(); Touch::Init(screenWidth, screenHeight);};
+        virtual ~Components() = default;
+        static void init(int screenWidth, int screenHeight){Graphics::init(); Touch::init(screenWidth, screenHeight);};
+        static void clearScreen();
+        
         virtual void display() = 0;
         
         static void clearAllButtons(){Touch::clearAllButtons();};
@@ -40,7 +43,7 @@ class Button : public Components {
         virtual void display(){
             button(_id, _buttonText);
         };
-        static bool pollButtons();
+        static ButtonID pollButtons();
         void setButtonText(String text){_buttonText = text;};
     private:
         int _id;
