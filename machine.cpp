@@ -9,12 +9,12 @@ Machine::Machine()
   App::init();
   running = true;
 
-  app = new AppHome();
+  this->app = new AppHome();
 }
 
 Machine::~Machine()
 {
-  
+  delete this->app;
 }
 
 void Machine::tick()
