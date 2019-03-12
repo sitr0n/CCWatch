@@ -1,11 +1,16 @@
 #include "app.h"
-#define SCREEN_WIDTH 240
-#define SCREEN_HEIGHT 320
+#include "gfxdriver.h"
+#include "touchscreendriver.h"
 
-screenField App::_position;
+
+Position2D App::_position;
 void App::init()
 {
-  Components::init(SCREEN_WIDTH, SCREEN_HEIGHT);
+  Widget::inject_graphics(new GFXdriver());
+  Widget::inject_input(new TouchscreenDriver());
+  
+  
+  
   _position.leftEdge = 0;
   _position.topEdge = 0;
   _position.rightEdge = SCREEN_WIDTH;
@@ -14,6 +19,5 @@ void App::init()
 
 App::~App()
 {
-  Components::clearScreen();
-  Components::clearAllButtons();
+  //Widget::clearAllButtons();
 }

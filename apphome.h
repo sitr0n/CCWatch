@@ -1,13 +1,19 @@
 #pragma once
 #include "app.h"
 
+#include "button.h"
+#include "textbrowser.h"
+
 class AppHome : public App
 {
   public:
-    void tick(Machine &machine);
-  protected:
-    enum Actions { NO_ACTION = 0, DIALOGUE_BOX, TODO_LIST };
-  
-    virtual void render() const;
+    AppHome() { render(); };
+    ~AppHome() {};
+
+    virtual void tick(Machine &context);
+    virtual void render();
+
+  private:
+    Button* btn;
 };
 

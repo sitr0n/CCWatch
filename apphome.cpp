@@ -1,50 +1,46 @@
 #include "apphome.h"
 #include "machine.h"
-#include "components.h"
+#include "widget.h"
 
-void AppHome::tick(Machine &machine)
+
+void AppHome::render()
 {
-  render();
+  Position2D pos;
+  pos.leftEdge = 10;
+  pos.topEdge = 10;
+  pos.rightEdge = 60;
+  pos.bottomEdge = 60;
   
-  Actions btn = NO_ACTION;
-  while(btn == NO_ACTION) {
-    btn = (Actions) Button::pollButtons();
-  }
-  switch(btn) {
-    case DIALOGUE_BOX :
-    {
-      machine.SetApp(Machine::AppId::DIALOGUE_BOX);
-    }
-    break;
-    case TODO_LIST :
-    {
-      machine.SetApp(Machine::AppId::TODO_LIST);
-    }
-    break;
-    default : 
-    {
-      
-    }
-  }
+  Button w(red, pos);
+  w.draw();
   
+  pos.topEdge += 50;
+  pos.bottomEdge += 50;
+  btn = new Button(white, pos);
+  btn->draw();
+  
+  pos.leftEdge = 60;
+  pos.topEdge = 60;
+  pos.rightEdge = 200;
+  pos.bottomEdge = 80;
+  TextBrowser tb("heey", blue, pos);
+  tb.set_float(TextBrowser::Float::center);
+  tb.draw();
 }
 
-void AppHome::render() const
-{
-  screenField dbArea;
-  dbArea.leftEdge = 50;
-  dbArea.topEdge = 50;
-  dbArea.rightEdge = 90;
-  dbArea.bottomEdge = 90;
-  Button dbButton(Actions::DIALOGUE_BOX, green, dbArea);
-  dbButton.display();
 
-  screenField tdlistArea;
-  tdlistArea.leftEdge = 120;
-  tdlistArea.topEdge = 50;
-  tdlistArea.rightEdge = 160;
-  tdlistArea.bottomEdge = 90;
-  Button tdlistButton(Actions::TODO_LIST, blue, tdlistArea);
-  tdlistButton.display();
+void AppHome::tick(Machine &context)
+{
+  Widget::tick();
+  if(btn->is_clicked()) {
+    Position2D pos;
+    pos.leftEdge = 100;
+    pos.topEdge = 100;
+    pos.rightEdge = 120;
+    pos.bottomEdge = 120;
+    
+    Button w(green, pos);
+    w.draw();
+  }
 }
 

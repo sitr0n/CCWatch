@@ -5,7 +5,7 @@ class App;
 class Machine
 {
   public:
-    enum class AppId { HOME, DIALOGUE_BOX, TODO_LIST };
+    enum class AppId { HOME, DIALOGUE_BOX, TODO_LIST, WIFI_TEST };
 
     Machine();
     ~Machine();

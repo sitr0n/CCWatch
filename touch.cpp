@@ -1,11 +1,21 @@
 #include "touch.h"
+#include <SPI.h>
+#include <Wire.h>
+
+// This is calibration data for the raw touch data to the screen coordinates
+#define TS_MINX 3800
+#define TS_MAXX 100
+#define TS_MINY 100
+#define TS_MAXY 3750
+#define STMPE_CS 32
+
 Touch * Touch::firstButtonPtr = nullptr;
 bool Touch::_touchEventHandled = false;
 Coordinate Touch::_screenWidth = 240;
 Coordinate Touch::_screenHeight = 320;
 Adafruit_STMPE610 Touch::screen = Adafruit_STMPE610(STMPE_CS);
 
-Touch::Touch(ButtonID id, screenField position) :
+Touch::Touch(ButtonId id, Position2D position) :
 _id(id),
 _position(position),
 nextButton(nullptr)
@@ -51,9 +61,9 @@ void Touch::init(Coordinate screenWidth, Coordinate screenHeight)
   }
 }
 
-ButtonID Touch::findPressedButton(int16_t x, int16_t y)
+ButtonId Touch::findPressedButton(int16_t x, int16_t y)
 {
-  ButtonID found = 0;
+  ButtonId found = 0;
   auto * node = firstButtonPtr;
   do {
     bool leftCheck = node->_position.leftEdge <= (int)x;
@@ -82,7 +92,7 @@ void Touch::clearAllButtons()
   }
 }
 
-ButtonID Touch::tick()
+ButtonId Touch::tick()
 {
   uint16_t x, y;
   uint8_t z;
@@ -96,7 +106,7 @@ ButtonID Touch::tick()
     // Scale from ~0->4000 to tft.width using the calibration #'s
     x = map(x, TS_MINX, TS_MAXX, 0, _screenWidth);
     y = map(y, TS_MINY, TS_MAXY, 0, _screenHeight);
-    ButtonID id = (firstButtonPtr == nullptr) ? 0 : findPressedButton(x, y);
+    ButtonId id = (firstButtonPtr == nullptr) ? 0 : findPressedButton(x, y);
     
     _touchEventHandled = true;
     return id;
